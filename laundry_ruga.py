@@ -21,7 +21,10 @@ def on_message(client, userdata, msg):
         client_id = order["client_id"]
         weight = order["weight"]
         package = order["package"]
-        process_time = {"hemat": 30, "standar": 20, "instant": 10}[package]
+
+        # Hitung waktu proses berdasarkan berat dan jenis paket
+        process_time_per_kg = {"hemat": 1.5, "standar": 1, "instant": 0.5}[package]
+        process_time = weight * process_time_per_kg
 
         if current_weight + weight <= max_weight_quota:
             current_weight += weight
