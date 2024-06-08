@@ -80,6 +80,7 @@ def place_order(laundry_topic, current_weight):
         return
 
     if current_weight + weight <= max_weight:
+        print("=" * 120)  # Batas pemisah
         client.publish(order_topic, json.dumps(order))
         print(f"Order placed to {laundry_topic} by {name} with {weight} kg package {package}")
     else:
@@ -101,6 +102,7 @@ def process_order_responses():
             if orders_to_check:
                 alternative_order = min(orders_to_check, key=lambda x: x[1])
                 alternative_topic, _, _ = alternative_order
+                print(f"Alternative found. Retrying with {alternative_topic}")
                 place_order(alternative_topic, 0)  # Quota is rechecked during placement
             else:
                 print("No alternative laundries with available quota. Orders are pending.")
@@ -121,6 +123,7 @@ def process_pending_orders():
                 if current_weight is None:
                     continue
                 if current_weight + order["weight"] <= max_weight:
+                    print("=" * 40)  # Batas pemisah
                     client.publish(topic + "/order", json.dumps(order))
                     pending_orders.remove(pending_order)
                     print(f"Pending order placed to {topic} by {order['client_id']} with {order['weight']} kg package {order['package']}")
