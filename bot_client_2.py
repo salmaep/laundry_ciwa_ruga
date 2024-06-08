@@ -85,7 +85,7 @@ def process_order_responses():
         if response['status'] == 'rejected':
             print(f"Order to {topic} was rejected due to full quota. Finding alternative...")
             for i in range(10, 0, -1):
-                print(f"Waiting {i} seconds before retry...")
+                print(f"Waiting {i} seconds before retrying...")
                 time.sleep(1)
             orders_to_check = [
                 order for order in orders
