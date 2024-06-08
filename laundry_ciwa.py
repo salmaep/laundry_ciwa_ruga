@@ -5,7 +5,7 @@ import random
 from datetime import datetime, timedelta
 
 broker = "localhost"
-topic = "laundry/ciwa"  # Ubah ke "laundry/ruga" untuk laundry_ruga.py
+topic = "laundry/ciwa"  
 max_weight_quota = 10  # Maksimum berat cucian yang dapat diproses (kg)
 current_weight = 0
 orders = []
