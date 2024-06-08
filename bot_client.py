@@ -12,13 +12,19 @@ order_responses = {}
 pending_orders = []
 
 packages = ["hemat", "standar", "instant"]
-clients = ["Alice", "Bob", "Charlie", "David", "Eve"]
+client_counter = 1
 
 # Define max weight quotas for each laundry
 laundry_max_weights = {
     "ciwa": 10,  # max weight for Laundry Ciwa is 10 kg
     "ruga": 8    # max weight for Laundry Ruga is 8 kg
 }
+
+def generate_client_name():
+    global client_counter
+    name = f"Client{client_counter}"
+    client_counter += 1
+    return name
 
 def on_connect(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
@@ -51,7 +57,7 @@ def process_orders():
         place_order(topic, current_weight)
 
 def place_order(laundry_topic, current_weight):
-    name = random.choice(clients)
+    name = generate_client_name()
     weight = random.randint(1, 5)
     package = random.choice(packages)
     order_topic = laundry_topic + "/order"
