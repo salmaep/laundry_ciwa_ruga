@@ -34,10 +34,10 @@ def on_message(client, userdata, msg):
                 "weight": weight,
                 "finish_time": finish_time
             })
-            print(f"Order received and accepted from {client_id}. Current weight: {current_weight}/{max_weight_quota} kg")
+            print(f"Order received and accepted from {client_id} with {weight} kg package {package}. Current weight: {current_weight}/{max_weight_quota} kg")
             response = {"status": "accepted", "current_weight": current_weight}
         else:
-            print(f"Order received but rejected from {client_id}. Weight limit exceeded: {current_weight}/{max_weight_quota} kg")
+            print(f"Order received but rejected from {client_id} with {weight} kg package {package}. Weight limit exceeded: {current_weight}/{max_weight_quota} kg")
             response = {"status": "rejected", "current_weight": current_weight}
         client.publish(msg.topic + "/response", json.dumps(response))
 
