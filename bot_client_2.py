@@ -84,22 +84,20 @@ def process_order_responses():
     for topic, response in order_responses.items():
         if response['status'] == 'rejected':
             print(f"Order to {topic} was rejected due to full quota. Finding alternative...")
-            # Set a 10-second delay before continuing the search for an alternative laundry
             for i in range(10, 0, -1):
-                print(f"Waiting {i} seconds before retrying...")
+                print(f"Waiting {i} seconds before retry...")
                 time.sleep(1)
             orders_to_check = [
                 order for order in orders
-                if order[2] < laundry_max_weights.get(order[0].split("/")[1], 0) and order[0] != topic.replace("/order/response", "")
+                if order[2] < laundry_max_weights.get(order[0].split("/")[1], 0) 
+                and order[0] != topic.replace("/order/response", "")
             ]
             if orders_to_check:
                 alternative_order = min(orders_to_check, key=lambda x: x[1])
                 alternative_topic, _, _ = alternative_order
-                place_order(alternative_topic, 0)  # Quota is rechecked during placement
+                place_order(alternative_topic, 0)  
             else:
-                print("No alternative laundries with available quota. Orders are pending.")
-
-    # Process pending orders if any
+                print("No alternative laundries with available quota. Orders are PENDING.")
     process_pending_orders()
 
 def process_pending_orders():
@@ -107,7 +105,7 @@ def process_pending_orders():
     for pending_order in pending_orders[:]:
         order, hold_until = pending_order
         if current_time >= hold_until:
-            for topic, (_, _, current_weight) in orders:
+            for topic, delivery_time, current_weight in orders:
                 laundry_name = topic.split("/")[1]
                 max_weight = laundry_max_weights.get(laundry_name)
                 if max_weight is None:
