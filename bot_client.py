@@ -113,7 +113,7 @@ def process_pending_orders():
     for pending_order in pending_orders[:]:
         order, hold_until = pending_order
         if current_time >= hold_until:
-            for topic, (_, _, current_weight) in orders:
+            for topic, delivery_time, current_weight in orders:
                 laundry_name = topic.split("/")[1]
                 max_weight = laundry_max_weights.get(laundry_name)
                 if max_weight is None:
