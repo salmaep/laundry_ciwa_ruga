@@ -23,7 +23,7 @@ def on_message(client, userdata, msg):
         package = order["package"]
 
         # Hitung waktu proses berdasarkan berat dan jenis paket
-        process_time_per_kg = {"hemat": 1.5, "standar": 1, "instant": 0.5}[package]
+        process_time_per_kg = {"hemat": 3, "standar": 2, "instant": 1}[package]
         process_time = weight * process_time_per_kg
 
         if current_weight + weight <= max_weight_quota:
@@ -35,10 +35,10 @@ def on_message(client, userdata, msg):
                 "finish_time": finish_time
             })
             print(f"Order received and accepted from {client_id} with {weight} kg package {package}. Current weight: {current_weight}/{max_weight_quota} kg")
-            response = {"status": "accepted", "current_weight": current_weight}
+            response = {"status": "accepted"}
         else:
             print(f"Order received but rejected from {client_id}  with {weight} kg package {package}. Weight limit exceeded: {current_weight}/{max_weight_quota} kg")
-            response = {"status": "rejected", "current_weight": current_weight}
+            response = {"status": "rejected"}
         client.publish(msg.topic + "/response", json.dumps(response))
 
 client = mqtt.Client()
