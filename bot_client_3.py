@@ -46,7 +46,7 @@ def process_orders():
     if orders:
         fastest_order = min(orders, key=lambda x: x[1])
         topic, delivery_time, current_weight = fastest_order
-        print(f"Fastest delivery by {topic} at {delivery_time} with current weight {current_weight} kg")
+        print(f"Fastest delivery by {topic} at {delivery_time}")
         # Simulate placing an order to the laundry with the fastest delivery time
         place_order(topic, current_weight)
 
