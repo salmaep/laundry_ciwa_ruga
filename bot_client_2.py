@@ -6,13 +6,13 @@ from datetime import datetime, timedelta
 
 broker = "localhost"
 laundry_follows = ["laundry/ciwa", "laundry/ruga"]
-client_id = "bot_client"
+client_id = "bot_client_2"
 orders = []
 order_responses = {}
 pending_orders = []
 
 packages = ["hemat", "standar", "instant"]
-clients = ["Alice", "Bob", "Charlie", "David", "Eve"]
+clients = ["Client 2"]
 
 # Define max weight quotas for each laundry
 laundry_max_weights = {
@@ -129,4 +129,4 @@ client.loop_start()
 
 while True:
     process_pending_orders()
-    time.sleep(1)
+    time.sleep(3)
